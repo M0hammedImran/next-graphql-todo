@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient({ log: ['query'] });
-interface Context {
+export interface Context {
     prisma: PrismaClient;
 }
 
