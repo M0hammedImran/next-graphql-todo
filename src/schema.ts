@@ -8,6 +8,20 @@ const Todo = objectType({
         t.model.id();
         t.model.isCompleted();
         t.model.title();
+        t.model.authorId();
+        t.model.createdAt();
+        t.model.updatedAt();
+    },
+});
+
+const User = objectType({
+    name: 'User',
+    definition: (t) => {
+        t.model.id();
+        t.model.email();
+        t.model.firstName();
+        t.model.lastName();
+        t.model.avatar();
     },
 });
 
@@ -15,6 +29,7 @@ const Query = queryType({
     definition(t) {
         t.crud.todo();
         t.crud.todos({ pagination: true, filtering: true });
+        t.crud.user();
     },
 });
 
@@ -23,6 +38,8 @@ const Mutation = mutationType({
         t.crud.createOneTodo();
         t.crud.updateOneTodo();
         t.crud.deleteOneTodo();
+        t.crud.createOneUser();
+        t.crud.updateOneUser();
     },
 });
 
@@ -30,6 +47,7 @@ export const schema = makeSchema({
     types: {
         Query,
         Todo,
+        User,
         Mutation,
     },
     outputs: {

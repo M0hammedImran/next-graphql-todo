@@ -7,6 +7,7 @@ const server = new ApolloServer({
     context: createContext(),
     tracing: true,
 });
+
 const handler = server.createHandler({ path: '/api/graphql' });
 
 export const config = {

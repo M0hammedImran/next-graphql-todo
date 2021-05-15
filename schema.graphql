@@ -28,21 +28,23 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
-input IntFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: NestedIntFilter
-  notIn: [Int!]
+input EnumRoleFieldUpdateOperationsInput {
+  set: Role
+}
+
+input EnumRoleFilter {
+  equals: Role
+  in: [Role!]
+  not: NestedEnumRoleFilter
+  notIn: [Role!]
 }
 
 type Mutation {
   createOneTodo(data: TodoCreateInput!): Todo!
+  createOneUser(data: UserCreateInput!): User!
   deleteOneTodo(where: TodoWhereUniqueInput!): Todo
   updateOneTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo
+  updateOneUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
 }
 
 input NestedBoolFilter {
@@ -61,15 +63,11 @@ input NestedDateTimeFilter {
   notIn: [DateTime!]
 }
 
-input NestedIntFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: NestedIntFilter
-  notIn: [Int!]
+input NestedEnumRoleFilter {
+  equals: Role
+  in: [Role!]
+  not: NestedEnumRoleFilter
+  notIn: [Role!]
 }
 
 input NestedStringFilter {
@@ -86,14 +84,34 @@ input NestedStringFilter {
   startsWith: String
 }
 
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
 type Query {
   todo(where: TodoWhereUniqueInput!): Todo
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, where: TodoWhereInput): [Todo!]!
+  user(where: UserWhereUniqueInput!): User
 }
 
 enum QueryMode {
   default
   insensitive
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 input StringFieldUpdateOperationsInput {
@@ -115,34 +133,253 @@ input StringFilter {
   startsWith: String
 }
 
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
 type Todo {
-  id: Int!
+  authorId: String
+  createdAt: DateTime!
+  id: String!
   isCompleted: Boolean!
   title: String!
+  updatedAt: DateTime!
 }
 
 input TodoCreateInput {
+  author: UserCreateNestedOneWithoutTodoInput
   createdAt: DateTime
+  id: String
   isCompleted: Boolean
   title: String!
+  updatedAt: DateTime
+}
+
+input TodoCreateManyAuthorInput {
+  createdAt: DateTime
+  id: String
+  isCompleted: Boolean
+  title: String!
+  updatedAt: DateTime
+}
+
+input TodoCreateManyAuthorInputEnvelope {
+  data: [TodoCreateManyAuthorInput!]
+  skipDuplicates: Boolean
+}
+
+input TodoCreateNestedManyWithoutAuthorInput {
+  connect: [TodoWhereUniqueInput!]
+  connectOrCreate: [TodoCreateOrConnectWithoutAuthorInput!]
+  create: [TodoCreateWithoutAuthorInput!]
+  createMany: TodoCreateManyAuthorInputEnvelope
+}
+
+input TodoCreateOrConnectWithoutAuthorInput {
+  create: TodoCreateWithoutAuthorInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoCreateWithoutAuthorInput {
+  createdAt: DateTime
+  id: String
+  isCompleted: Boolean
+  title: String!
+  updatedAt: DateTime
+}
+
+input TodoListRelationFilter {
+  every: TodoWhereInput
+  none: TodoWhereInput
+  some: TodoWhereInput
+}
+
+input TodoScalarWhereInput {
+  AND: [TodoScalarWhereInput!]
+  NOT: [TodoScalarWhereInput!]
+  OR: [TodoScalarWhereInput!]
+  authorId: StringNullableFilter
+  createdAt: DateTimeFilter
+  id: StringFilter
+  isCompleted: BoolFilter
+  title: StringFilter
+  updatedAt: DateTimeFilter
 }
 
 input TodoUpdateInput {
+  author: UserUpdateOneWithoutTodoInput
   createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   isCompleted: BoolFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input TodoUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  isCompleted: BoolFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input TodoUpdateManyWithWhereWithoutAuthorInput {
+  data: TodoUpdateManyMutationInput!
+  where: TodoScalarWhereInput!
+}
+
+input TodoUpdateManyWithoutAuthorInput {
+  connect: [TodoWhereUniqueInput!]
+  connectOrCreate: [TodoCreateOrConnectWithoutAuthorInput!]
+  create: [TodoCreateWithoutAuthorInput!]
+  createMany: TodoCreateManyAuthorInputEnvelope
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [TodoUpdateManyWithWhereWithoutAuthorInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input TodoUpdateWithWhereUniqueWithoutAuthorInput {
+  data: TodoUpdateWithoutAuthorInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpdateWithoutAuthorInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  isCompleted: BoolFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input TodoUpsertWithWhereUniqueWithoutAuthorInput {
+  create: TodoCreateWithoutAuthorInput!
+  update: TodoUpdateWithoutAuthorInput!
+  where: TodoWhereUniqueInput!
 }
 
 input TodoWhereInput {
   AND: [TodoWhereInput!]
   NOT: [TodoWhereInput!]
   OR: [TodoWhereInput!]
+  author: UserWhereInput
+  authorId: StringNullableFilter
   createdAt: DateTimeFilter
-  id: IntFilter
+  id: StringFilter
   isCompleted: BoolFilter
   title: StringFilter
+  updatedAt: DateTimeFilter
 }
 
 input TodoWhereUniqueInput {
-  id: Int
+  id: String
+}
+
+type User {
+  avatar: String!
+  email: String!
+  firstName: String!
+  id: String!
+  lastName: String!
+}
+
+input UserCreateInput {
+  avatar: String!
+  email: String!
+  firstName: String!
+  id: String
+  lastName: String!
+  password: String!
+  role: Role
+  todo: TodoCreateNestedManyWithoutAuthorInput
+}
+
+input UserCreateNestedOneWithoutTodoInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutTodoInput
+  create: UserCreateWithoutTodoInput
+}
+
+input UserCreateOrConnectWithoutTodoInput {
+  create: UserCreateWithoutTodoInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutTodoInput {
+  avatar: String!
+  email: String!
+  firstName: String!
+  id: String
+  lastName: String!
+  password: String!
+  role: Role
+}
+
+input UserUpdateInput {
+  avatar: StringFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  firstName: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  lastName: StringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  role: EnumRoleFieldUpdateOperationsInput
+  todo: TodoUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateOneWithoutTodoInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutTodoInput
+  create: UserCreateWithoutTodoInput
+  delete: Boolean
+  disconnect: Boolean
+  update: UserUpdateWithoutTodoInput
+  upsert: UserUpsertWithoutTodoInput
+}
+
+input UserUpdateWithoutTodoInput {
+  avatar: StringFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  firstName: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  lastName: StringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  role: EnumRoleFieldUpdateOperationsInput
+}
+
+input UserUpsertWithoutTodoInput {
+  create: UserCreateWithoutTodoInput!
+  update: UserUpdateWithoutTodoInput!
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  avatar: StringFilter
+  email: StringFilter
+  firstName: StringFilter
+  id: StringFilter
+  lastName: StringFilter
+  password: StringFilter
+  role: EnumRoleFilter
+  todo: TodoListRelationFilter
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: String
 }

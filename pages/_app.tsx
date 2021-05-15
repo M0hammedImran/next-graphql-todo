@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Provider } from 'next-auth/client'
 import '../tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }) {
@@ -171,8 +172,9 @@ function MyApp({ Component, pageProps }) {
                     media='(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)'
                 />
             </Head>
-
+            <Provider session={pageProps.session}>  
             <Component {...pageProps} />
+            </Provider>
         </>
     );
 }
