@@ -1,8 +1,15 @@
 import Head from 'next/head';
-import { Provider } from 'next-auth/client'
+import { Provider } from 'next-auth/client';
 import '../tailwindcss/tailwind.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate } from 'react-query/hydration';
+import { useRef } from 'react';
 
 function MyApp({ Component, pageProps }) {
+    const queryClientRef = useRef<QueryClient>();
+    if (!queryClientRef.current) {
+        queryClientRef.current = new QueryClient();
+    }
     return (
         <>
             <Head>
@@ -172,8 +179,12 @@ function MyApp({ Component, pageProps }) {
                     media='(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)'
                 />
             </Head>
-            <Provider session={pageProps.session}>  
-            <Component {...pageProps} />
+            <Provider session={pageProps.session}>
+                <QueryClientProvider client={queryClientRef.current}>
+                    <Hydrate state={pageProps.dehydratedState}>
+                        <Component {...pageProps} />
+                    </Hydrate>
+                </QueryClientProvider>
             </Provider>
         </>
     );
