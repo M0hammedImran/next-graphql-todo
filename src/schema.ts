@@ -19,9 +19,8 @@ const User = objectType({
     definition: (t) => {
         t.model.id();
         t.model.email();
-        t.model.firstName();
-        t.model.lastName();
-        t.model.avatar();
+        t.model.name();
+        t.model.image();
     },
 });
 
@@ -29,6 +28,7 @@ const Query = queryType({
     definition(t) {
         t.crud.todo();
         t.crud.todos({ pagination: true, filtering: true });
+        t.crud.users({ pagination: true, filtering: true });
         t.crud.user();
     },
 });
