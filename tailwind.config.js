@@ -15,9 +15,6 @@ module.exports = {
             minHeight: {
                 body: 'calc(100vh - 64px)',
             },
-            color: {
-                brand: colors.indigo,
-            },
         },
     },
     variants: {
