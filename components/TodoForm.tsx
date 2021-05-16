@@ -7,7 +7,7 @@ const TodoForm: React.FC = () => {
                 id='todo'
                 className='w-full rounded-tl rounded-bl'
             />
-            <button className='flex items-center px-5 py-3 rounded-tr rounded-br bg-indigo-500 text-white'>
+            <button className='flex items-center px-5 py-2 rounded-tr rounded-br bg-indigo-600 text-white focus:outline-none focus:ring-1 ring-yellow-600'>
                 <span>Add</span>
                 <svg
                     xmlns='http://www.w3.org/2000/svg'

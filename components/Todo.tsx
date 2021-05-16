@@ -1,10 +1,15 @@
 import Image from 'next/image';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+import { Todo as todoType } from '.prisma/client';
 
-const Todo: React.FC = () => {
+interface Props {
+    todos: todoType[];
+}
+
+const Todo: React.FC<Props> = ({ todos }) => {
     return (
-        <div className='max-w-lg w-full shadow-md p-2 rounded grid place-items-center'>
+        <div className='max-w-2xl pb-8 w-full shadow-lg bg-white p-2 rounded grid place-items-center border min-h-full'>
             <div className='select-none p-0'>
                 <Image
                     src={'/logo.svg'}
@@ -14,9 +19,9 @@ const Todo: React.FC = () => {
                 />
             </div>
             <h2 className='text-lg font-semibold'>Todo list</h2>
-            <div className='max-w-md w-full min-h-[60vh] max-h-[1024px] space-y-4'>
+            <div className='max-w-md w-full min-h-[60vh] space-y-4'>
                 <TodoForm />
-                <TodoList />
+                <TodoList todos={todos} />
             </div>
         </div>
     );
