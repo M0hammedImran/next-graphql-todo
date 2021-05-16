@@ -1,4 +1,43 @@
+import { gql } from 'graphql-request';
+import { useGQLMutation } from 'hooks/useGQLMutation';
+import { useSession } from 'next-auth/client';
+import { useState } from 'react';
+
+const CREATE_TODO = gql`
+    mutation CreateTodo($todo: String!, $email: String!) {
+        createOneTodo(
+            data: {
+                title: $todo
+                isCompleted: false
+                author: { connect: { email: $email } }
+            }
+        ) {
+            title
+            isCompleted
+        }
+    }
+`;
+
 const TodoForm: React.FC = () => {
+    const [session] = useSession();
+
+    const [todo, setTodo] = useState('');
+    const { mutate } = useGQLMutation({ key: 'createTodo' });
+
+    const createTodo = () => {
+        if (!todo) {
+            return;
+        }
+
+        mutate({
+            query: CREATE_TODO,
+            variables: {
+                todo,
+                email: session.user.email,
+            },
+        });
+    };
+
     return (
         <div className='flex'>
             <input
@@ -6,8 +45,13 @@ const TodoForm: React.FC = () => {
                 name='todo'
                 id='todo'
                 className='w-full rounded-tl rounded-bl'
+                value={todo}
+                onChange={({ target: { value } }) => setTodo(value)}
             />
-            <button className='flex items-center px-5 py-2 rounded-tr rounded-br bg-indigo-600 text-white focus:outline-none focus:ring-1 ring-yellow-600'>
+            <button
+                className='flex items-center px-5 py-2 rounded-tr rounded-br bg-indigo-600 text-white focus:outline-none focus:ring-1 ring-yellow-600'
+                onClick={createTodo}
+            >
                 <span>Add</span>
                 <svg
                     xmlns='http://www.w3.org/2000/svg'

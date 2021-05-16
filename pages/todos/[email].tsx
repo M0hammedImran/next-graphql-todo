@@ -1,14 +1,15 @@
 import Head from 'next/head';
 import Todo from 'Components/Todo';
 import { GetServerSideProps } from 'next';
+import { gql } from 'graphql-request';
 import { Navbar } from 'Components/Navbar';
-import { Todo as todoType } from '.prisma/client';
 import { PrismaClient } from '@prisma/client';
 import { serialize } from 'superjson';
-import { QueryFunctionContext, useQuery } from 'react-query';
-import { request, gql } from 'graphql-request';
+import { Todo as todoType } from '.prisma/client';
 import { useGQLQuery } from 'hooks/useGQLQuery';
 import { useState } from 'react';
+
+const prisma = new PrismaClient();
 
 const GET_TODOS = gql`
     query todos($email: String) {
@@ -21,8 +22,6 @@ const GET_TODOS = gql`
         }
     }
 `;
-
-const prisma = new PrismaClient();
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const email = context.params.email as string;
@@ -68,7 +67,7 @@ export default function Todos({ todos: Todos, email }: Props) {
                 <link rel='icon' href='/logo_white.svg' />
             </Head>
             <Navbar />
-            <main className='flex-1 min-h-body flex items-center justify-center px-2 bg-gray-50 p-4'>
+            <main className='flex-1 min-h-body flex items-center justify-center px-2 bg-gray-50 p-6'>
                 <Todo todos={todos} />
             </main>
         </>
