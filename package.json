@@ -16,13 +16,17 @@
         "@tailwindcss/jit": "^0.1.18",
         "apollo-server-micro": "^2.24.0",
         "graphql": "^15.5.0",
+        "graphql-request": "^3.4.0",
         "next": "10.2.0",
         "next-auth": "^3.23.0",
         "next-pwa": "^5.2.20",
         "nexus": "^1.0.0",
         "nexus-plugin-prisma": "^0.34.1",
+        "pg": "^8.6.0",
         "react": "17.0.2",
-        "react-dom": "17.0.2"
+        "react-dom": "17.0.2",
+        "react-query": "^3.16.0",
+        "superjson": "^1.7.4"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.3.2",
