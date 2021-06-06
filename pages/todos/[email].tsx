@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import Todo from 'Components/Todo';
+import Todo from '@/components/Todo';
 import { GetServerSideProps } from 'next';
 import { gql } from 'graphql-request';
-import { Navbar } from 'Components/Navbar';
+import { Navbar } from '@/components/Navbar';
 import { PrismaClient } from '@prisma/client';
 import { serialize } from 'superjson';
 import { Todo as todoType } from '.prisma/client';
