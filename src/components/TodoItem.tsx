@@ -13,6 +13,13 @@ const UPDATE_TODO = gql`
         }
     }
 `;
+const DELETE_TODO = gql`
+    mutation deleteTodo($id: Int) {
+        deleteOneTodo(where: { id: $id }) {
+            id
+        }
+    }
+`;
 
 interface Props {
     todo: Todo;
@@ -37,6 +44,15 @@ export default function TodoItem({ todo }: Props) {
         });
     };
 
+    const deleteTodo = () => {
+        mutate({
+            query: DELETE_TODO,
+            variables: {
+                id: todo.id,
+            },
+        });
+    };
+
     return (
         <li
             className='w-full inline-flex justify-between items-center relative'
@@ -47,9 +63,6 @@ export default function TodoItem({ todo }: Props) {
                 })
             }
         >
-            {/* <div className='p-1 rounded-full bg-indigo-600 text-white absolute top-0 right-0'>
-              
-            </div> */}
             <div className='space-x-4 inline-flex items-start cursor-pointer flex-1'>
                 <span
                     className={`inline-block w-6 h-6 min-w-[24px] mt-px max-w-[24px] rounded transition duration-200 ring-1 ring-gray-300 ${
@@ -59,10 +72,13 @@ export default function TodoItem({ todo }: Props) {
                 <p className='border-none w-full capitalize font-medium text-lg whitespace-pre-wrap pr-8'>
                     {todo.title}
                 </p>
-                <button className='flex p-2 rounded-full items-center justify-center bg-indigo-500 text-white'>
+                <button
+                    className='flex p-1 rounded-full items-center justify-center bg-indigo-500 text-white'
+                    onClick={deleteTodo}
+                >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
-                        className='h-6 w-6 cursor-pointer'
+                        className='h-4 w-4 cursor-pointer'
                         fill='none'
                         viewBox='0 0 24 24'
                         stroke='currentColor'
