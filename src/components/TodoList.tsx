@@ -1,6 +1,7 @@
+import TodoItem from './TodoItem';
 import { Children } from 'react';
 import { Todo as todoType } from '.prisma/client';
-import TodoItem from './TodoItem';
+
 interface Props {
     todos: todoType[];
 }

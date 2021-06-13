@@ -1,5 +1,5 @@
 import { gql } from 'graphql-request';
-import { useGQLMutation } from 'hooks/useGQLMutation';
+import { useGQLMutation } from '@/src/hooks/useGQLMutation';
 import { useSession } from 'next-auth/client';
 import { useState } from 'react';
 
@@ -24,7 +24,8 @@ const TodoForm: React.FC = () => {
     const [todo, setTodo] = useState('');
     const { mutate } = useGQLMutation({ key: 'createTodo' });
 
-    const createTodo = () => {
+    const createTodo = (e?: any) => {
+        e.preventDefault();
         if (!todo) {
             return;
         }
@@ -33,24 +34,26 @@ const TodoForm: React.FC = () => {
             query: CREATE_TODO,
             variables: {
                 todo,
-                email: session.user.email,
+                email: session?.user?.email,
             },
         });
+        setTodo('');
     };
 
     return (
-        <div className='flex'>
+        <form className='flex' onSubmit={createTodo}>
             <input
                 type='text'
                 name='todo'
                 id='todo'
+                autoFocus
                 className='w-full rounded-tl rounded-bl'
                 value={todo}
                 onChange={({ target: { value } }) => setTodo(value)}
             />
             <button
                 className='flex items-center px-5 py-2 rounded-tr rounded-br bg-indigo-600 text-white focus:outline-none focus:ring-1 ring-yellow-600'
-                onClick={createTodo}
+                type='submit'
             >
                 <span>Add</span>
                 <svg
@@ -66,7 +69,7 @@ const TodoForm: React.FC = () => {
                     />
                 </svg>
             </button>
-        </div>
+        </form>
     );
 };
 

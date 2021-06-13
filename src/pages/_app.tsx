@@ -1,11 +1,12 @@
 import Head from 'next/head';
+import { AppProps } from 'next/app';
+import { Hydrate } from 'react-query/hydration';
 import { Provider } from 'next-auth/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Hydrate } from 'react-query/hydration';
 import { useRef } from 'react';
 import '../tailwindcss/tailwind.css';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
     const queryClientRef = useRef<QueryClient>();
 
     if (!queryClientRef.current) {

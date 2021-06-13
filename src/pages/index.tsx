@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import { Footer } from '@/components/Footer';
-import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/src/components/Footer';
+import { Navbar } from '@/src/components/Navbar';
 import { signIn, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 
@@ -17,6 +17,7 @@ function HomeHead() {
 export default function Home() {
     const [session, loading] = useSession();
     const router = useRouter();
+
     if (loading) {
         return (
             <>

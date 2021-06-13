@@ -9,7 +9,7 @@ export function Navbar() {
                 'loading...'
             ) : session ? (
                 <div className='flex items-center space-x-4'>
-                    <span>Signed in as {session.user.email}</span>
+                    <span>Signed in as {session?.user?.email}</span>
                     <button
                         className='py-2 px-5 border rounded'
                         onClick={() => signOut()}
@@ -20,13 +20,12 @@ export function Navbar() {
             ) : (
                 <div className='flex items-center space-x-4'>
                     <span>Not signed in</span>
-                    <a
-                        href='#'
+                    <button
                         className='py-2 px-5 border rounded'
-                        onClick={() => signIn()}
+                        onClick={() => signIn('google')}
                     >
                         Sign in
-                    </a>
+                    </button>
                 </div>
             )}
         </nav>
