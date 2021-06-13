@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-micro';
-import { createContext } from 'src/context';
-import { schema } from 'src/schema';
+import { createContext } from '@/context';
+import { schema } from '@/schema';
 
 const server = new ApolloServer({
     schema,

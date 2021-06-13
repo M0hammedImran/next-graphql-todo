@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import { Footer } from '@/src/components/Footer';
-import { Navbar } from '@/src/components/Navbar';
+import { Footer } from '@/components/Footer';
+import { Navbar } from '@/components/Navbar';
 import { signIn, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 

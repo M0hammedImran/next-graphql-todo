@@ -1,5 +1,5 @@
 import { Todo } from '.prisma/client';
-import { useGQLMutation } from '@/src/hooks/useGQLMutation';
+import { useGQLMutation } from '@/hooks/useGQLMutation';
 import { gql } from 'graphql-request';
 
 const UPDATE_TODO = gql`

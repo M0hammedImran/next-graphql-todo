@@ -1,5 +1,5 @@
 import { gql } from 'graphql-request';
-import { useGQLMutation } from '@/src/hooks/useGQLMutation';
+import { useGQLMutation } from '@/hooks/useGQLMutation';
 import { useSession } from 'next-auth/client';
 import { useState } from 'react';
 

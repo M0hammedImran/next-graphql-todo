@@ -1,12 +1,12 @@
 import Head from 'next/head';
-import Todo from '@/src/components/Todo';
+import Todo from '@/components/Todo';
 import { GetServerSideProps } from 'next';
 import { gql } from 'graphql-request';
-import { Navbar } from '@/src/components/Navbar';
-import { PrismaClient } from '@prisma/client';
+import { Navbar } from '@/components/Navbar';
+import { PrismaClient } from '.prisma/client';
 import { serialize } from 'superjson';
 import { Todo as todoType } from '.prisma/client';
-import { useGQLQuery } from '@/src/hooks/useGQLQuery';
+import { useGQLQuery } from '@/hooks/useGQLQuery';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
